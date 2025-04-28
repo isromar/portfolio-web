@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Páginas Kindle</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 5px 10px;
+            background: #f0f0f0;
+        }
+
+        h3 {
+            text-align: center;
+        }
+
+        form {
+            background: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            max-width: 500px;
+            margin: 20px auto;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input,
+        button {
+            width: 90%;
+            padding: 10px;
+            margin-top: 5px;
+            font-size: 1em;
+            margin-bottom: 5px;
+        }
+
+        button[type="submit"] {
+            background-color: #4CAF50;
+
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        button#borrar {
+            background-color: #f44336;
+        }
+
+        button#borrar:hover {
+            background-color: #e53935;
+        }
+
+        .boton-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #resultado {
+            margin-top: 10px;
+            text-align: center;
+            font-size: 1em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .libro {
+            color: #1E90FF;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h3>Calculadora de Páginas Kindle</h3>
+
+    <form id="formulario">
+        <label for="finalPosition">Posición final del libro:</label>
+        <input type="number" id="finalPosition" required>
+
+        <label for="pos1">Primera posición:</label>
+        <input type="number" id="pos1" required>
+
+        <label for="pos2">Segunda posición:</label>
+        <input type="number" id="pos2" required>
+
+        <label for="pos3">Tercera posición:</label>
+        <input type="number" id="pos3" required>
+
+        <label for="realPages">Número real de páginas (opcional):</label>
+        <input type="number" id="realPages">
+
+        <div class="boton-container">
+            <button id="calcular">Calcular</button>
+            <button id="borrar">Borrar</button>
+        </div>
+    </form>
+
+    <div id="resultado"></div>
+
+    <script>
+        document.getElementById('formulario').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const finalPosition = parseInt(document.getElementById('finalPosition').value);
+            const pos1 = parseInt(document.getElementById('pos1').value);
+            const pos2 = parseInt(document.getElementById('pos2').value);
+            const pos3 = parseInt(document.getElementById('pos3').value);
+
+            const avance1 = pos2 - pos1;
+            const avance2 = pos3 - pos2;
+            const avanceMedio = (avance1 + avance2) / 2;
+
+            let factorCorreccion = 1;
+
+            // Definimos un ajuste dinámico del factor según el avance medio
+            if (avanceMedio < 4) {
+                factorCorreccion = 1.5;// Libro breve
+            } else if (avanceMedio >= 4 && avanceMedio < 7) {
+                factorCorreccion = 0.98;    // Libro medio
+            } else if (avanceMedio >= 7) {
+                factorCorreccion = 0.7; // Libro extenso
+            }
+
+            const paginas = finalPosition / (avanceMedio * factorCorreccion);
+            const porcentaje = Math.round((pos1 / finalPosition) * 100);
+            const paginasLeidasHastaPos1 = (pos1 / finalPosition) * paginas;
+            const paginasRestantes = (paginas - paginasLeidasHastaPos1);
+            const realPages = parseInt(document.getElementById('realPages').value);
+
+            let resultadoHTML = `
+                📈 Estás aproximadamente en el: <strong>${porcentaje.toFixed(0)}%</strong><br>
+                📖 Páginas aproximadas: <strong>${Math.round(paginas)}</strong><br>
+                📚 Páginas leídas: <strong>${Math.round(paginasLeidasHastaPos1)}</strong>
+            `;
+
+            if (!isNaN(realPages) && realPages > 0) {
+                const proporcionRealCalculada = realPages / paginas;
+                const paginasLeidasEquivalente = paginasLeidasHastaPos1 * proporcionRealCalculada;
+                const paginasRestantesEquivalente = paginasRestantes * proporcionRealCalculada;
+
+                resultadoHTML += `<span class="libro">Libro: <strong>${Math.round(paginasLeidasEquivalente)}</strong></span><br>
+                    ⏰ Páginas restantes: <strong>${Math.round(paginasRestantes)}</strong> <span class="libro">Libro: <strong>${Math.round(paginasRestantesEquivalente)}</strong></span><br>
+                    `;
+                            } else {
+                                resultadoHTML += `<br>
+                    ⏰ Páginas restantes: <strong>${Math.round(paginasRestantes)}</strong><br>
+                    `;
+            }
+
+
+            document.getElementById('resultado').innerHTML = resultadoHTML;
+        });
+
+        document.getElementById('borrar').addEventListener('click', function () {
+            document.getElementById('finalPosition').value = '';
+            document.getElementById('pos1').value = '';
+            document.getElementById('pos2').value = '';
+            document.getElementById('pos3').value = '';
+            document.getElementById('realPages').value = '';
+            document.getElementById('resultado').innerHTML = '';
+        });
+    </script>
+
+</body>
+
+</html>
