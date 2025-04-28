@@ -1,6 +1,8 @@
-# Calculadora de Páginas Kindle
+# Español
 
-Este es un pequeño proyecto en HTML, CSS y JavaScript que permite **calcular tu progreso de lectura** en un libro de Kindle y, opcionalmente, **compararlo** con el número real de páginas de la versión física del libro.
+## Calculadora de Páginas Kindle
+
+Este es un pequeño proyecto desarrollado en **HTML**, **CSS** y **JavaScript** que permite **calcular tu progreso de lectura en páginas** de un libro de Kindle, ya que Kindle solo muestra la **posición** en el texto, lo cual no es equivalente al número de páginas. Además, ofrece la opción de **comparar ese progreso** con el número real de páginas de la versión física del libro.
 
 ## ¿Cómo funciona?
 
@@ -30,5 +32,32 @@ Este es un pequeño proyecto en HTML, CSS y JavaScript que permite **calcular tu
 
 ## Notas
 
-- El cálculo se basa en un ajuste automático dependiendo del ritmo de avance.
-- El número de páginas estimadas puede variar ligeramente debido al tamaño de fuente y formato de Kindle.
+- El cálculo se basa en un ajuste automático dependiendo del tamaño del libro.
+- El número de páginas estimadas puede variar ligeramente del real.
+
+Puedes probar la [calculadora en vivo](https://isabelrodenas.es/calculadora-kindle)
+
+
+# English
+
+## Project: Kindle Page Calculator
+
+This project is a **web calculator** that estimates how many pages you have read in a Kindle book, based on the positions you input. Kindle only provides the **position** in the book, but the calculator converts this information into an estimated page count, adjusting dynamically to your reading pace.
+
+### Files
+
+- The entire project is contained in a single HTML file, with embedded CSS for easy use and transport.
+
+### Usage
+
+1. Open the `index.html` file in any modern browser.
+2. Fill in the data requested in the form.
+3. Click **Calculate** to see the results.
+4. You can click **Clear** to reset the fields and start over.
+
+### Notes
+
+- The calculation is based on an automatic adjustment depending on the book's length.
+- The estimated page number may slightly vary from the real one.
+
+You can try the [live calculator](https://isabelrodenas.es/calculadora-kindle)
