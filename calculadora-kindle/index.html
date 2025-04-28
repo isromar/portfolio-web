@@ -145,7 +145,7 @@
             let resultadoHTML = `
                 📈 Estás aproximadamente en el: <strong>${porcentaje.toFixed(0)}%</strong><br>
                 📖 Páginas aproximadas: <strong>${Math.round(paginas)}</strong><br>
-                📚 Páginas leídas: <strong>${Math.round(paginasLeidasHastaPos1)}</strong>
+                📚 Páginas leídas Kindle: <strong>${Math.round(paginasLeidasHastaPos1)}</strong>
             `;
 
             if (!isNaN(realPages) && realPages > 0) {
@@ -154,11 +154,11 @@
                 const paginasRestantesEquivalente = paginasRestantes * proporcionRealCalculada;
 
                 resultadoHTML += `<span class="libro">Libro: <strong>${Math.round(paginasLeidasEquivalente)}</strong></span><br>
-                    ⏰ Páginas restantes: <strong>${Math.round(paginasRestantes)}</strong> <span class="libro">Libro: <strong>${Math.round(paginasRestantesEquivalente)}</strong></span><br>
+                    ⏰ Páginas restantes Kindle: <strong>${Math.round(paginasRestantes)}</strong> <span class="libro">Libro: <strong>${Math.round(paginasRestantesEquivalente)}</strong></span><br>
                     `;
                             } else {
                                 resultadoHTML += `<br>
-                    ⏰ Páginas restantes: <strong>${Math.round(paginasRestantes)}</strong><br>
+                    ⏰ Páginas restantes Kindle: <strong>${Math.round(paginasRestantes)}</strong><br>
                     `;
             }
 
