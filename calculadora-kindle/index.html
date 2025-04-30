@@ -136,17 +136,35 @@
                 factorCorreccion = 0.7; // Libro extenso
             }
 
+            // Cálculo de páginas
             const paginas = finalPosition / (avanceMedio * factorCorreccion);
             const porcentaje = Math.round((pos1 / finalPosition) * 100);
             const paginasLeidasHastaPos1 = (pos1 / finalPosition) * paginas;
             const paginasRestantes = (paginas - paginasLeidasHastaPos1);
+
+            // Definir palabras por página y palabras por minuto de lectura
+            const palabrasPorPagina = 130; // Promedio de palabras por página de Kindle
+            const palabrasPorMinuto = 200; // Promedio de palabras por minuto de lectura
+//31F3fwf5%
+//kindle
+            // Calcular el total de palabras
+            const totalPalabras = paginasRestantes * palabrasPorPagina;
+
+            // Calcular el tiempo estimado de lectura en minutos
+            const tiempoEstimadoMinutos = totalPalabras / palabrasPorMinuto;
+
+            // Convertir el tiempo en horas y minutos
+            const horas = Math.floor(tiempoEstimadoMinutos / 60);
+            const minutos = Math.round(tiempoEstimadoMinutos % 60);
+
             const realPages = parseInt(document.getElementById('realPages').value);
 
             let resultadoHTML = `
-                📈 Estás aproximadamente en el: <strong>${porcentaje.toFixed(0)}%</strong><br>
-                📖 Páginas aproximadas: <strong>${Math.round(paginas)}</strong><br>
-                📚 Páginas leídas Kindle: <strong>${Math.round(paginasLeidasHastaPos1)}</strong>
-            `;
+        📈 Estás aproximadamente en el: <strong>${porcentaje.toFixed(0)}%</strong><br>
+        📖 Páginas aproximadas: <strong>${Math.round(paginas)}</strong><br>
+        ⏳ Tiempo restante de lectura: <strong>${horas}h ${minutos}m</strong><br>
+        📚 Páginas leídas Kindle: <strong>${Math.round(paginasLeidasHastaPos1)}</strong>
+    `;
 
             if (!isNaN(realPages) && realPages > 0) {
                 const proporcionRealCalculada = realPages / paginas;
@@ -154,14 +172,13 @@
                 const paginasRestantesEquivalente = paginasRestantes * proporcionRealCalculada;
 
                 resultadoHTML += `<span class="libro">Libro: <strong>${Math.round(paginasLeidasEquivalente)}</strong></span><br>
-                    ⏰ Páginas restantes Kindle: <strong>${Math.round(paginasRestantes)}</strong> <span class="libro">Libro: <strong>${Math.round(paginasRestantesEquivalente)}</strong></span><br>
-                    `;
-                            } else {
-                                resultadoHTML += `<br>
-                    ⏰ Páginas restantes Kindle: <strong>${Math.round(paginasRestantes)}</strong><br>
-                    `;
+            ⏰ Páginas restantes Kindle: <strong>${Math.round(paginasRestantes)}</strong> <span class="libro">Libro: <strong>${Math.round(paginasRestantesEquivalente)}</strong></span><br>
+            `;
+            } else {
+                resultadoHTML += `<br>
+        ⏰ Páginas restantes Kindle: <strong>${Math.round(paginasRestantes)}</strong><br>
+        `;
             }
-
 
             document.getElementById('resultado').innerHTML = resultadoHTML;
         });
