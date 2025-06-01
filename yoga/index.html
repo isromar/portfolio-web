@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yoga</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <script>
+        // Cargar el menú desde un archivo externo
+        fetch('../tree/menu.html')
+            .then(res => res.text())
+            .then(data => {
+                document.getElementById('menu').innerHTML = data;
+            });
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #e6f2ef;
+            color: #333;
+            padding: 20px;
+        }
+
+        #container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 1.5em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            color: #7f8c8d;
+        }
+
+        h2,
+        h3 {
+            color: #16a085;
+            margin-top: 20px;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+        }
+
+        h3 {
+            font-size: 1rem;
+        }
+
+        ul {
+            list-style-type: none;
+            margin-left: 0;
+            padding-left: 0;
+        }
+
+        ul li {
+            margin: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        ul li::before {
+            content: "☯️";
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-size: 1em;
+            color: #16a085;
+        }
+
+        .section {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.9em;
+            color: #95a5a6;
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background: #ddd;
+            margin: 30px 0;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.5em;
+            }
+
+            header p {
+                font-size: 1em;
+            }
+
+            ul li {
+                font-size: 0.95em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+
+        <header>
+            <h1>Ejercicios de Yoga</h1>
+        </header>
+
+        <h2 id="rutina-de-yoga-de-5-minutos-para-principiantes-y-cuerpo-anquilosado">Rutina de 5 minutos para
+            principiantes y cuerpo anquilosado</h2>
+        <h3 id="respiracion-profunda-y-centrado-1-minuto">1. Respiración profunda y centrado (1 minuto)</h3>
+        <ul>
+            <li>Siéntate cómodo o de rodillas.</li>
+            <li>Cierra los ojos, inhala profundamente por la nariz contando hasta 4, retén 2 segundos, exhala lentamente
+                contando hasta 6.</li>
+            <li>Repite y siente cómo te relajas.</li>
+        </ul>
+        <h3 id="gato-vaca-1-minuto">2. Gato-vaca (1 minuto)</h3>
+        <ul>
+            <li>Ponte a cuatro patas (manos bajo hombros, rodillas bajo caderas).</li>
+            <li>Inhala arqueando la espalda hacia abajo y levantando la cabeza y el coxis (postura de vaca).</li>
+            <li>Exhala redondeando la espalda hacia arriba y metiendo la barbilla (postura de gato).</li>
+            <li>Repite lentamente, coordinando con la respiración.</li>
+        </ul>
+        <h3 id="estiramiento-lateral-sentado-1-minuto">3. Estiramiento lateral sentado (1 minuto)</h3>
+        <ul>
+            <li>Siéntate con las piernas cruzadas o estiradas.</li>
+            <li>Inhala y estira el brazo derecho hacia arriba.</li>
+            <li>Exhala y flexiona el torso hacia la izquierda, estirando el costado derecho.</li>
+            <li>Mantén 30 segundos y cambia de lado.</li>
+        </ul>
+        <h3 id="postura-del-nino-balasana-1-minuto">4. Postura del niño (balasana) (1 minuto)</h3>
+        <ul>
+            <li>Desde cuatro patas, lleva las caderas hacia los talones y estira los brazos hacia adelante o a los
+                lados.</li>
+            <li>Relaja la frente en la esterilla y respira profundo.</li>
+        </ul>
+        <h3 id="torsion-suave-sentado-1-minuto">5. Torsión suave sentado (1 minuto)</h3>
+        <ul>
+            <li>Siéntate con las piernas cruzadas o estiradas.</li>
+            <li>Coloca la mano derecha en la rodilla izquierda y la mano izquierda detrás de ti.</li>
+            <li>Inhala y alarga la columna, exhala y gira suavemente el torso hacia la izquierda.</li>
+            <li>Mantén 30 segundos y cambia de lado.</li>
+        </ul>
+        <hr />
+        <p>Haz esta rutina a diario o los días que no tengas clase, y verás cómo poco a poco tu cuerpo se va soltando y
+            la flexibilidad mejora.</p>
+
+    </div>
+</body>
+
+</html>
