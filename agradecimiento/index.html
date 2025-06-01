@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Lista de Gratitud</title>
+
+    <style>
+        body {
+            font-family: 'Lucida Grande', 'Segoe UI', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Lucida Sans Unicode', Helvetica,
+                Arial, sans-serif;
+            font-size: 1em;
+            margin: 0;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            text-align: center;
+        }
+
+        #container {
+            width: 90%;
+            font-family: 'Roboto Condensed', 'Hiragino Sans GB', 'Microsoft YaHei', STHeiti, SimSun, 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', 'Segoe UI', AppleSDGothicNeo-Medium, 'Malgun Gothic', Verdana, Tahoma, sans-serif;
+            margin: auto;
+        }
+
+        h3 {
+            font-size: 1.6em;
+            font-weight: bold;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            line-height: 1.6em;
+            margin: 15px 0;
+            font-size: 1em;
+        }
+
+        #frase {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #007BFF;
+        }
+
+        button {
+            padding: 10px 15px;
+            font-size: 1em;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-top: 1%;
+            margin-bottom: 1%;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Media Query para pantallas más pequeñas */
+        @media (max-width: 768px) {
+            #container {
+                width: 95%;
+            }
+
+            li {
+                font-size: 1.1em;
+            }
+        }
+    </style>
+
+    <script>
+        // Cargar el menú desde un archivo externo
+        fetch('../tree/menu.html')
+            .then(res => res.text())
+            .then(data => {
+                document.getElementById('menu').innerHTML = data;
+            });
+
+        // Obtener frase inspiradora y traducirla
+        async function obtenerFrase() {
+            try {
+                // Usamos un proxy para evitar el problema de CORS
+                const respuesta = await fetch("https://api.allorigins.win/get?url=" + encodeURIComponent("https://zenquotes.io/api/today"));
+                const data = await respuesta.json();
+                const frases = JSON.parse(data.contents);
+                const fraseOriginal = frases[0].q;
+
+                // Traducimos la frase automáticamente al español
+                const traducida = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=es&dt=t&q=${encodeURIComponent(fraseOriginal)}`);
+                const traduccion = await traducida.json();
+
+                document.getElementById("frase").innerText = traduccion[0][0][0];
+            } catch (error) {
+                document.getElementById("frase").innerText = "No se pudo cargar la frase. Inténtalo más tarde.";
+            }
+        }
+
+        // Cargar una frase automáticamente al abrir la página
+        window.onload = function () {
+            obtenerFrase();
+        }
+
+        // Función para obtener una frase aleatoria
+        async function obtenerFraseAleatoria() {
+            try {
+                // Usamos un proxy para evitar el problema de CORS
+                const respuesta = await fetch("https://api.allorigins.win/get?url=" + encodeURIComponent("https://zenquotes.io/api/random"));
+                const data = await respuesta.json();
+                const frases = JSON.parse(data.contents);
+                const fraseOriginal = frases[0].q;
+
+                // Traducimos la frase automáticamente al español
+                const traducida = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=es&dt=t&q=${encodeURIComponent(fraseOriginal)}`);
+                const traduccion = await traducida.json();
+
+                document.getElementById("frase").innerText = traduccion[0][0][0];
+            } catch (error) {
+                document.getElementById("frase").innerText = "No se pudo cargar la frase. Inténtalo más tarde.";
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+            document.body.appendChild(canvas);
+
+            canvas.style.position = "fixed";
+            canvas.style.top = "0";
+            canvas.style.left = "0";
+            canvas.style.zIndex = "1000";
+            canvas.style.pointerEvents = "none";
+
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            let balls = [
+                { x: 100, y: 100, radius: 30, dx: 3, dy: 2, color: "rgba(255, 255, 0, 0.6)" },
+                { x: 200, y: 150, radius: 40, dx: 2, dy: 3, color: "rgba(255, 165, 0, 0.5)" },
+                { x: 300, y: 200, radius: 35, dx: 4, dy: 2, color: "rgba(0, 150, 255, 0.3)" }
+            ];
+
+            function drawBalls() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                balls.forEach(ball => {
+                    ctx.beginPath();
+                    ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = ball.color;
+                    ctx.fill();
+                    ctx.closePath();
+
+                    ball.x += ball.dx;
+                    ball.y += ball.dy;
+
+                    if (ball.x + ball.radius > canvas.width || ball.x - ball.radius < 0) {
+                        ball.dx *= -1;
+                    }
+
+                    if (ball.y + ball.radius > canvas.height || ball.y - ball.radius < 0) {
+                        ball.dy *= -1;
+                    }
+                });
+
+                requestAnimationFrame(drawBalls);
+            }
+
+            drawBalls();
+
+            window.addEventListener("resize", () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <header>
+        <div id="menu"></div>
+    </header>
+
+    <div id="container">
+
+        <h3>🙏 <strong>Lista de Gratitud</strong></h3>
+        <h2>Mañana</h2>
+        <ul>
+            <li>🌅 Agradezco la oportunidad de un nuevo día para comenzar de cero y abrazar nuevos desafíos.</li>
+            <li>💪 Agradezco por mi salud y bienestar, que me dan la energía para vivir cada momento plenamente.</li>
+            <li>☕ Agradezco las pequeñas cosas que disfruto cada día, como el sol de la mañana y el café caliente.</li>
+            <li>🌟 Agradezco mis sueños y metas, que me inspiran a seguir adelante y alcanzar mis objetivos.</li>
+            <li>💼 Agradezco por tener un trabajo que me gusta y que me permite crecer personal y profesionalmente.</li>
+            <li>☯️ Agradezco mi capacidad de disfrutar mi propia compañía, que me da tranquilidad y espacio para
+                reflexionar.</li>
+            <li>🌌 Agradezco al universo por guiarme y brindarme oportunidades para aprender y crecer.</li>
+            <li>✨ Pido al universo que me siga guiando hacia mi mejor versión y me dé la sabiduría para tomar las
+                mejores decisiones en mi vida.</li>
+        </ul>
+
+
+        <h2>Tarde</h2>
+        <ul>
+            <li>🌿 Agradezco por la comida que me ha dado energía y nutrición para continuar con mi día.</li>
+            <li>💖 Agradezco el tiempo que dedico a cuidar de mi salud y bienestar.</li>
+            <li>🙏 Agradezco mi capacidad para disfrutar del momento presente y hacer una pausa consciente.</li>
+            <li>🚶‍♀️ Agradezco cada paso que doy hacia mis objetivos, por pequeños que sean.</li>
+            <li>🌸 Agradezco los momentos de descanso que me ayudan a recargar energías para seguir adelante.</li>
+            <li>🌅 Agradezco la claridad mental para tomar decisiones saludables y positivas.</li>
+        </ul>
+
+        <h2>Noche</h2>
+        <ul>
+            <li>☯️ Agradezco el día que ha pasado, con todos sus aprendizajes y momentos de crecimiento.</li>
+            <li>🌿 Agradezco la oportunidad de reflexionar sobre lo vivido y encontrar paz en la quietud de la noche.
+            </li>
+            <li>❤️ Agradezco por mi salud y por todo lo que mi cuerpo me ha permitido hacer hoy.</li>
+            <li>📚 Agradezco las lecciones que la jornada me ha dejado, tanto las fáciles como las desafiantes.</li>
+            <li>🌙 Agradezco el descanso que se acerca y la oportunidad de recargarme para un nuevo día.</li>
+            <li>🌟 Agradezco la serenidad que siento al finalizar el día, sabiendo que todo está en orden.</li>
+            <li>🌌 Agradezco al universo por todo lo recibido hoy, y por lo que está por venir.</li>
+            <li>🌙 Pido al universo que me ayude a descansar profundamente, renovando mi energía para un nuevo comienzo.
+            </li>
+        </ul>
+
+        <p id="frase">Cargando frase...</p>
+        <button onclick="obtenerFraseAleatoria()">💡 Obtener Nueva Frase</button>
+    </div>
+</body>
+
+</html>
